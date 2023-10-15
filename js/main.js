@@ -44,7 +44,7 @@ const generatePhotoId = createRandomIdFromRangeGenerator(1, MAX_PHOTO_ID);
 const generateRandomComment = () => {
   const comment = {
     id: generateCommentId(),
-    avatar: `photos/${getRandomInteger(1, 6).toString()}.jpg`,
+    avatar: `photos/${getRandomInteger(1, 6)}.jpg`,
     message: MESSAGES[getRandomInteger(0, MESSAGES.length - 1)],
     name: NAMES[getRandomInteger(0, NAMES.length - 1)],
   };
