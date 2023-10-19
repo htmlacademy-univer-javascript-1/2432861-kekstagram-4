@@ -13,6 +13,8 @@ const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
 const MIN_COMMENTS_COUNT = 0;
 const MAX_COMMENTS_COUNT = 30;
+const MIN_AVATAR_COUNT = 1;
+const MAX_AVATAR_COUNT = 6;
 
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -25,7 +27,7 @@ const getRandomInteger = (min, max) => {
 const generateRandomComment = (id) => {
   const comment = {
     id,
-    avatar: `photos/${getRandomInteger(1, 6)}.jpg`,
+    avatar: `photos/${getRandomInteger(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT)}.jpg`,
     message: MESSAGES[getRandomInteger(0, MESSAGES.length - 1)],
     name: NAMES[getRandomInteger(0, NAMES.length - 1)],
   };
