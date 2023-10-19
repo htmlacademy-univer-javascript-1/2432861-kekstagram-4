@@ -7,10 +7,11 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 const NAMES = ['Александр', 'Екатерина', 'Иван', 'Мария', 'Дмитрий', 'Анна'];
-const MAX_COMMENT_ID = 1000;
-const MAX_PHOTO_ID = 25;
+
+const MAX_PHOTO_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
+const MIN_COMMENTS_COUNT = 0;
 const MAX_COMMENTS_COUNT = 30;
 
 const getRandomInteger = (min, max) => {
@@ -21,29 +22,9 @@ const getRandomInteger = (min, max) => {
   return Math.floor(result);
 };
 
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-
-    return currentValue;
-  };
-};
-
-const generateCommentId = createRandomIdFromRangeGenerator(1, MAX_COMMENT_ID);
-const generatePhotoId = createRandomIdFromRangeGenerator(1, MAX_PHOTO_ID);
-
-const generateRandomComment = () => {
+const generateRandomComment = (id) => {
   const comment = {
-    id: generateCommentId(),
+    id,
     avatar: `photos/${getRandomInteger(1, 6)}.jpg`,
     message: MESSAGES[getRandomInteger(0, MESSAGES.length - 1)],
     name: NAMES[getRandomInteger(0, NAMES.length - 1)],
@@ -52,19 +33,18 @@ const generateRandomComment = () => {
   return comment;
 };
 
-const createPhoto = () => {
-  const photoId = generatePhotoId();
+const createPhoto = (id) => {
   const photo = {
-    id: photoId,
-    url: `photos/${photoId}.png`,
-    description: `Описание ${photoId}-ой фотографии`,
+    id,
+    url: `photos/${id}.png`,
+    description: `Описание ${id}-ой фотографии`,
     likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
     comments: []
   };
 
-  const numComments = getRandomInteger(0, MAX_COMMENTS_COUNT);
-  for (let i = 0; i < numComments; i++) {
-    photo.comments.push(generateRandomComment());
+  const numComments = getRandomInteger(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
+  for (let i = 1; i <= numComments; i++) {
+    photo.comments.push(generateRandomComment(i));
   }
 
   return photo;
@@ -73,9 +53,11 @@ const createPhoto = () => {
 const createPhotos = () => {
   const photos = [];
 
-  for (let i = 1; i <= MAX_PHOTO_ID; i++) {
-    photos.push(createPhoto());
+  for (let i = 1; i <= MAX_PHOTO_COUNT; i++) {
+    photos.push(createPhoto(i));
   }
 
   return photos;
 };
+
+createPhotos();
