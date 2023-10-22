@@ -3,6 +3,7 @@ const checkStringLength = (string, maxStringLength) => string.length <= maxStrin
 const isPalindromString = (string) => {
   string = string.toLowerCase().split(' ').join('');
   const reversedString = string.split('').reverse().join('');
+
   return string === reversedString;
 };
 
@@ -15,6 +16,7 @@ const findNumbers = (input) => {
       numbers += char;
     }
   }
+
   return numbers === '' ? NaN : +numbers;
 };
 
