@@ -1,25 +1,21 @@
-const checkStringLength = (string, maxStringLength) => string.length <= maxStringLength;
+const timeToMinutes = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
 
-const isPalindromString = (string) => {
-  string = string.toLowerCase().split(' ').join('');
-  const reversedString = string.split('').reverse().join('');
-
-  return string === reversedString;
+  return hours * 60 + minutes;
 };
 
-const findNumbers = (input) => {
-  const inputString = input.toString();
-  let numbers = '';
+const isMeetingOutsideWorkingHours = (startWorking, endWorking, startMeeting, durationMeeting) => {
+  const startWorkingMinutes = timeToMinutes(startWorking);
+  const endWorkingMinutes = timeToMinutes(endWorking);
+  const startMeetingMinutes = timeToMinutes(startMeeting);
+  const endMeetingMinutes = startMeetingMinutes + durationMeeting;
 
-  for (const char of inputString) {
-    if (char >= '0' && char <= '9') {
-      numbers += char;
-    }
-  }
-
-  return numbers === '' ? NaN : +numbers;
+  return startMeetingMinutes >= startWorkingMinutes && endMeetingMinutes <= endWorkingMinutes;
 };
 
-checkStringLength('проверяемая строка', 20);
-isPalindromString('Лёша на полке клопа нашёл ');
-findNumbers('1 кефир, 0.5 батона');
+isMeetingOutsideWorkingHours('08:00', '17:30', '14:00', 90); // true
+isMeetingOutsideWorkingHours('8:0', '10:0', '8:0', 120);     // true
+isMeetingOutsideWorkingHours('08:00', '14:30', '14:00', 90); // false
+isMeetingOutsideWorkingHours('14:00', '17:30', '08:0', 90);  // false
+isMeetingOutsideWorkingHours('8:00', '17:30', '08:00', 900); // false
+
