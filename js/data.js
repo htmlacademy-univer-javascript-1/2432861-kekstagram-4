@@ -25,7 +25,7 @@ const generateRandomComment = (id) => {
 const createPhoto = (id) => {
   const photo = {
     id,
-    url: `photos/${id}.png`,
+    url: `photos/${id}.jpg`,
     description: `Описание ${id}-ой фотографии`,
     likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
     comments: []
