@@ -1,28 +1,41 @@
-const pictureTemplate = document.querySelector('#picture').content;
+import { renderFullSizeWindow } from './fullSizePicture.js';
+
+let pictures = null;
 const picturesContainer = document.querySelector('.pictures');
 
-const createPictureElement = ({ url, description, likes, comments }) => {
-  const picture = pictureTemplate.cloneNode(true);
+const createPictureElement = ({ id, url, description, likes, comments }) => `
+  <a href="#" data-id="${id}" class="picture">
+    <img class="picture__img" src="${url}" width="182" height="182" alt="${description}">
+    <p class="picture__info">
+      <span class="picture__comments">${comments.length}</span>
+      <span class="picture__likes">${likes}</span>
+    </p>
+  </a>
+`;
 
-  const pictureImg = picture.querySelector('.picture__img');
-  const pictureLikes = picture.querySelector('.picture__likes');
-  const pictureComments = picture.querySelector('.picture__comments');
+const сlickOnPictures = (evt) => {
+  const clickedElement = evt.target.closest('.picture');
 
-  pictureImg.src = url;
-  pictureImg.alt = description;
-  pictureLikes.textContent = likes;
-  pictureComments.textContent = comments.length;
+  if (clickedElement) {
+    const clickedPictureId = +clickedElement.dataset.id;
+    const clickedPicture = pictures.find((picture) => picture.id === clickedPictureId);
 
-  return picture;
+    if (clickedPicture) {
+      renderFullSizeWindow(clickedPicture);
+    }
+  }
+};
+
+const renderPicture = (picture) => {
+  const template = createPictureElement(picture);
+  picturesContainer.insertAdjacentHTML('afterbegin', template);
 };
 
 export const renderPhotos = (data) => {
-  const picturesFragment = document.createDocumentFragment();
+  pictures = data.slice();
 
-  data.forEach((pictureData) =>
-    picturesFragment.appendChild(createPictureElement(pictureData))
-  );
-
-  picturesContainer.appendChild(picturesFragment);
+  if (pictures) {
+    pictures.forEach(renderPicture);
+    picturesContainer.addEventListener('click', сlickOnPictures);
+  }
 };
-
