@@ -13,7 +13,7 @@ const createPictureElement = ({ id, url, description, likes, comments }) => `
   </a>
 `;
 
-const сlickOnPictures = (evt) => {
+const onPictureContainerClick = (evt) => {
   const clickedElement = evt.target.closest('.picture');
 
   if (clickedElement) {
@@ -36,6 +36,6 @@ export const renderPhotos = (data) => {
 
   if (pictures) {
     pictures.forEach(renderPicture);
-    picturesContainer.addEventListener('click', сlickOnPictures);
+    picturesContainer.addEventListener('click', onPictureContainerClick);
   }
 };

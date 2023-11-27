@@ -50,6 +50,8 @@ const keydownEscape = (evt) => {
   }
 };
 
+const exitButtonClickHandler = () => closeFullSizeImage();
+
 export const renderFullSizeWindow = (picture) => {
   renderFullSizePicture(picture);
   renderComments(picture.comments);
@@ -58,6 +60,6 @@ export const renderFullSizeWindow = (picture) => {
   addHiddenClass(commentCountElement);
   addModalOpenClass(bodyElement);
 
-  exitButtonElement.addEventListener('click', closeFullSizeImage);
+  exitButtonElement.addEventListener('click', exitButtonClickHandler);
   document.addEventListener('keydown', keydownEscape);
 };
