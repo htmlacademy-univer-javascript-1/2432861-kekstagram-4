@@ -43,7 +43,7 @@ const closeFullSizeImage = () => {
   removeModalOpenClass(bodyElement);
 };
 
-const keydownEscape = (evt) => {
+const escapeKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeFullSizeImage();
@@ -61,5 +61,5 @@ export const renderFullSizeWindow = (picture) => {
   addModalOpenClass(bodyElement);
 
   exitButtonElement.addEventListener('click', exitButtonClickHandler);
-  document.addEventListener('keydown', keydownEscape);
+  document.addEventListener('keydown', escapeKeydownHandler);
 };
