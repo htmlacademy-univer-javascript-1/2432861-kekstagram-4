@@ -1,8 +1,17 @@
+import {
+  STEP_COMMENTS,
+  COUNT_VISIBLE_СOMMENTS_DEFAULT
+} from './constants.js';
+
 const bodyElement = document.querySelector('body');
 const fullPictureElement = document.querySelector('.big-picture');
+const exitButtonElement = fullPictureElement.querySelector('.big-picture__cancel');
 const commentCountElement = fullPictureElement.querySelector('.social__comment-count');
 const commentListElement = fullPictureElement.querySelector('.social__comments');
-const exitButtonElement = fullPictureElement.querySelector('.big-picture__cancel');
+const commentsLoaderElement = fullPictureElement.querySelector('.social__comments-loader');
+
+let commentsPicture = null;
+let countVisibleСomments = COUNT_VISIBLE_СOMMENTS_DEFAULT;
 
 const createCommentElement = ({ avatar, message, name }) => `
   <li class="social__comment">
@@ -26,21 +35,37 @@ const renderFullSizePicture = ({ url, likes, description }) => {
   likesCountElement.textContent = likes;
 };
 
-const renderComments = (comments) => {
-  commentListElement.innerHTML = '';
-  const commentsHtml = comments.map(createCommentElement).join('');
-  commentListElement.insertAdjacentHTML('afterbegin', commentsHtml);
-};
-
 const addHiddenClass = (element) => element.classList.add('hidden');
 const removeHiddenClass = (element) => element.classList.remove('hidden');
 const removeModalOpenClass = (element) => element.classList.remove('modal-open');
 const addModalOpenClass = (element) => element.classList.add('modal-open');
 
+const renderComments = () => {
+  const visibleComments = commentsPicture.slice(0, countVisibleСomments);
+  const visibleCommentsLength = visibleComments.length;
+  const commentsPictureLength = commentsPicture.length;
+
+  commentCountElement.textContent = ` 
+    ${visibleCommentsLength} из ${commentsPictureLength} комментариев
+  `;
+  commentListElement.innerHTML = visibleComments.map(createCommentElement).join('');
+
+  const shouldHideLoader = visibleCommentsLength >= commentsPictureLength;
+  (shouldHideLoader ? addHiddenClass : removeHiddenClass)(commentsLoaderElement);
+};
+
 const closeFullSizeImage = () => {
+  countVisibleСomments = COUNT_VISIBLE_СOMMENTS_DEFAULT;
+
   addHiddenClass(fullPictureElement);
-  removeModalOpenClass(commentCountElement);
+  addHiddenClass(commentCountElement);
   removeModalOpenClass(bodyElement);
+};
+
+const buttonLoadMoreComments = () => {
+  countVisibleСomments += STEP_COMMENTS;
+
+  renderComments();
 };
 
 const escapeKeydownHandler = (evt) => {
@@ -53,13 +78,16 @@ const escapeKeydownHandler = (evt) => {
 const exitButtonClickHandler = () => closeFullSizeImage();
 
 export const renderFullSizeWindow = (picture) => {
+  commentsPicture = picture.comments;
+
   renderFullSizePicture(picture);
-  renderComments(picture.comments);
+  renderComments();
 
   removeHiddenClass(fullPictureElement);
-  addHiddenClass(commentCountElement);
+  removeHiddenClass(commentCountElement);
   addModalOpenClass(bodyElement);
 
   exitButtonElement.addEventListener('click', exitButtonClickHandler);
   document.addEventListener('keydown', escapeKeydownHandler);
+  commentsLoaderElement.addEventListener('click', buttonLoadMoreComments);
 };

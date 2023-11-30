@@ -15,3 +15,6 @@ export const MIN_COMMENTS_COUNT = 0;
 export const MAX_COMMENTS_COUNT = 30;
 export const MIN_AVATAR_COUNT = 1;
 export const MAX_AVATAR_COUNT = 6;
+
+export const STEP_COMMENTS = 5;
+export const COUNT_VISIBLE_СOMMENTS_DEFAULT = 5;
