@@ -1,6 +1,5 @@
 import {
   STEP_COMMENTS,
-  COUNT_VISIBLE_СOMMENTS_DEFAULT
 } from './constants.js';
 
 const bodyElement = document.querySelector('body');
@@ -10,8 +9,8 @@ const commentCountElement = fullPictureElement.querySelector('.social__comment-c
 const commentListElement = fullPictureElement.querySelector('.social__comments');
 const commentsLoaderElement = fullPictureElement.querySelector('.social__comments-loader');
 
-let commentsPicture = null;
-let countVisibleСomments = COUNT_VISIBLE_СOMMENTS_DEFAULT;
+let pictureComments = null;
+let countVisibleСomments = STEP_COMMENTS;
 
 const createCommentElement = ({ avatar, message, name }) => `
   <li class="social__comment">
@@ -41,9 +40,9 @@ const removeModalOpenClass = (element) => element.classList.remove('modal-open')
 const addModalOpenClass = (element) => element.classList.add('modal-open');
 
 const renderComments = () => {
-  const visibleComments = commentsPicture.slice(0, countVisibleСomments);
+  const visibleComments = pictureComments.slice(0, countVisibleСomments);
   const visibleCommentsLength = visibleComments.length;
-  const commentsPictureLength = commentsPicture.length;
+  const commentsPictureLength = pictureComments.length;
 
   commentCountElement.textContent = ` 
     ${visibleCommentsLength} из ${commentsPictureLength} комментариев
@@ -55,14 +54,14 @@ const renderComments = () => {
 };
 
 const closeFullSizeImage = () => {
-  countVisibleСomments = COUNT_VISIBLE_СOMMENTS_DEFAULT;
+  countVisibleСomments = STEP_COMMENTS;
 
   addHiddenClass(fullPictureElement);
   addHiddenClass(commentCountElement);
   removeModalOpenClass(bodyElement);
 };
 
-const buttonLoadMoreComments = () => {
+const buttonLoadMoreCommentsClickHandler = () => {
   countVisibleСomments += STEP_COMMENTS;
 
   renderComments();
@@ -78,7 +77,7 @@ const escapeKeydownHandler = (evt) => {
 const exitButtonClickHandler = () => closeFullSizeImage();
 
 export const renderFullSizeWindow = (picture) => {
-  commentsPicture = picture.comments;
+  pictureComments = picture.comments;
 
   renderFullSizePicture(picture);
   renderComments();
@@ -89,5 +88,5 @@ export const renderFullSizeWindow = (picture) => {
 
   exitButtonElement.addEventListener('click', exitButtonClickHandler);
   document.addEventListener('keydown', escapeKeydownHandler);
-  commentsLoaderElement.addEventListener('click', buttonLoadMoreComments);
+  commentsLoaderElement.addEventListener('click', buttonLoadMoreCommentsClickHandler);
 };
