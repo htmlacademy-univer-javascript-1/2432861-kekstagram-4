@@ -1,4 +1,4 @@
-import { renderFullSizeWindow } from './fullSizePicture.js';
+import { renderFullSizeWindow } from './full-size-picture.js';
 
 let pictures = null;
 const picturesContainer = document.querySelector('.pictures');
