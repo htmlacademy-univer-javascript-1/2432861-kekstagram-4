@@ -100,20 +100,21 @@ const removeEventListeners = () => {
   hashtagsInput.removeEventListener('keydown', onInputEscKeydown);
 };
 
-const closeEditPopup = () => {
+function closeEditPopup() {
   formElement.reset();
   formValidation = null;
 
   addHiddenClass(overlayElement);
   removeModalOpenClass(bodyElement);
   addEventListeners();
-};
+}
 
 const openEditPopup = () => {
   removeHiddenClass(overlayElement);
   addModalOpenClass(bodyElement);
 
   initValidation();
+
   removeEventListeners();
 };
 
