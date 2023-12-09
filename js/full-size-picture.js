@@ -34,10 +34,10 @@ const renderFullSizePicture = ({ url, likes, description }) => {
   likesCountElement.textContent = likes;
 };
 
-const addHiddenClass = (element) => element.classList.add('hidden');
-const removeHiddenClass = (element) => element.classList.remove('hidden');
-const removeModalOpenClass = (element) => element.classList.remove('modal-open');
-const addModalOpenClass = (element) => element.classList.add('modal-open');
+export const addHiddenClass = (element) => element.classList.add('hidden');
+export const removeHiddenClass = (element) => element.classList.remove('hidden');
+export const removeModalOpenClass = (element) => element.classList.remove('modal-open');
+export const addModalOpenClass = (element) => element.classList.add('modal-open');
 
 const renderComments = () => {
   const visibleComments = pictureComments.slice(0, countVisibleСomments);
