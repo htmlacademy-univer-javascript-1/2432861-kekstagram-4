@@ -20,3 +20,28 @@ export const STEP_COMMENTS = 5;
 
 export const MAX_COUNT_HASHTAG = 5;
 export const MAX_COMMENT_LENGTH = 140;
+
+export const DEFAULT_SCALE = 100;
+export const STEP_SCALE = 25;
+export const MAX_SCALE = 100;
+export const MIN_SCALE = 25;
+
+export const PARSE_INT_RADIX = 10;
+
+export const FilterSettings = {
+  none: {},
+  chrome: { style: 'grayscale', unit: '' },
+  sepia: { style: 'sepia', unit: '' },
+  marvin: { style: 'invert', unit: '%' },
+  phobos: { style: 'blur', unit: 'px' },
+  heat: { style: 'brightness', unit: '' },
+};
+
+export const SliderSettings = {
+  none: { min: 0, max: 100, step: 1 },
+  chrome: { min: 0, max: 1, step: 0.1 },
+  sepia: { min: 0, max: 1, step: 0.1 },
+  marvin: { min: 0, max: 100, step: 1 },
+  phobos: { min: 0, max: 3, step: 0.1 },
+  heat: { min: 1, max: 3, step: 0.1 },
+};
