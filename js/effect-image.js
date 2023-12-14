@@ -2,7 +2,7 @@ import { FilterSettings, SliderSettings } from './constants.js';
 import {
   addHiddenClass,
   removeHiddenClass,
-} from './full-size-picture.js';
+} from './util.js';
 
 const bodyElement = document.querySelector('body');
 const imageElement = bodyElement.querySelector('.img-upload__preview');

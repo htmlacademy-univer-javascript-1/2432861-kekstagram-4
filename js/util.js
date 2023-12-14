@@ -5,3 +5,8 @@ export const getRandomInteger = (min, max) => {
 
   return Math.floor(result);
 };
+
+export const addHiddenClass = (element) => element.classList.add('hidden');
+export const removeHiddenClass = (element) => element.classList.remove('hidden');
+export const removeModalOpenClass = (element) => element.classList.remove('modal-open');
+export const addModalOpenClass = (element) => element.classList.add('modal-open');

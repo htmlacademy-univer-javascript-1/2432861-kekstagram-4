@@ -1,6 +1,12 @@
 import {
   STEP_COMMENTS,
 } from './constants.js';
+import {
+  addHiddenClass,
+  removeHiddenClass,
+  removeModalOpenClass,
+  addModalOpenClass
+} from './util.js';
 
 const bodyElement = document.querySelector('body');
 const fullPictureElement = document.querySelector('.big-picture');
@@ -33,11 +39,6 @@ const renderFullSizePicture = ({ url, likes, description }) => {
   captionElement.textContent = description;
   likesCountElement.textContent = likes;
 };
-
-export const addHiddenClass = (element) => element.classList.add('hidden');
-export const removeHiddenClass = (element) => element.classList.remove('hidden');
-export const removeModalOpenClass = (element) => element.classList.remove('modal-open');
-export const addModalOpenClass = (element) => element.classList.add('modal-open');
 
 const renderComments = () => {
   const visibleComments = pictureComments.slice(0, countVisibleСomments);
