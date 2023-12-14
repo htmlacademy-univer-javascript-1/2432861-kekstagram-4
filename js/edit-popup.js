@@ -5,6 +5,9 @@ import {
   addModalOpenClass
 } from './full-size-picture.js';
 import { MAX_COUNT_HASHTAG, MAX_COMMENT_LENGTH } from './constants.js';
+import { destroyEffect, initEffect } from './effect-image.js';
+import { destroyScale, initScale } from './scale-image.js';
+
 
 const bodyElement = document.querySelector('body');
 const inputElement = bodyElement.querySelector('.img-upload__input');
@@ -106,7 +109,10 @@ function closeEditPopup() {
 
   addHiddenClass(overlayElement);
   removeModalOpenClass(bodyElement);
-  addEventListeners();
+  destroyScale();
+  destroyEffect();
+
+  removeEventListeners();
 }
 
 const openEditPopup = () => {
@@ -114,14 +120,15 @@ const openEditPopup = () => {
   addModalOpenClass(bodyElement);
 
   initValidation();
-
-  removeEventListeners();
+  addEventListeners();
 };
 
 const onFileInputChange = () => {
   const file = inputElement.files[0];
   if (file && file.type.startsWith('image/')) {
     openEditPopup();
+    initScale();
+    initEffect();
   }
 };
 
