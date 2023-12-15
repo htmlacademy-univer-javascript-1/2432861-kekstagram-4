@@ -28,7 +28,7 @@ export const MIN_SCALE = 25;
 
 export const PARSE_INT_RADIX = 10;
 
-export const FilterSettings = {
+export const FilterSetting = {
   none: {},
   chrome: { style: 'grayscale', unit: '' },
   sepia: { style: 'sepia', unit: '' },
@@ -37,7 +37,7 @@ export const FilterSettings = {
   heat: { style: 'brightness', unit: '' },
 };
 
-export const SliderSettings = {
+export const SliderSetting = {
   none: { min: 0, max: 100, step: 1 },
   chrome: { min: 0, max: 1, step: 0.1 },
   sepia: { min: 0, max: 1, step: 0.1 },
