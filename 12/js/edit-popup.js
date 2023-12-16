@@ -3,12 +3,12 @@ import {
   removeHiddenClass,
   removeModalOpenClass,
   addModalOpenClass
-} from './util.js';
+} from './utils.js';
 import { MAX_COUNT_HASHTAG, MAX_COMMENT_LENGTH } from './constants.js';
 import { destroyEffect, initEffect } from './effect-image.js';
 import { destroyScale, initScale } from './scale-image.js';
 import { createSender, ErrorText } from './api.js';
-import { showSuccessMessage } from './succes.js';
+import { showSuccessMessage } from './success.js';
 import { showErrorMessage } from './error-load-img.js';
 
 
