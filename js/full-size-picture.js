@@ -6,7 +6,7 @@ import {
   removeHiddenClass,
   removeModalOpenClass,
   addModalOpenClass
-} from './util.js';
+} from './utils.js';
 
 const bodyElement = document.querySelector('body');
 const fullPictureElement = document.querySelector('.big-picture');

@@ -1,43 +1,35 @@
 import {
   addHiddenClass,
   removeHiddenClass,
-} from './util.js';
+} from './utils.js';
 
-const errorLoadImgTemplate = document.getElementById('error-load-data-server');
-const errorLoadImgSection = errorLoadImgTemplate.content.cloneNode(true).querySelector('.error');
-document.body.appendChild(errorLoadImgSection);
+const errorTemplate = document.getElementById('error-load-data-server');
+const errorMessage = errorTemplate.content.cloneNode(true).querySelector('.error');
+document.body.appendChild(errorMessage);
 
-const errorLoadImgButton = errorLoadImgSection.querySelector('.error__button');
-errorLoadImgButton.addEventListener('click', hideErrorLoadImgMessage);
+const errorSection = document.querySelector('.error');
+const errorButton = document.querySelector('.error__button');
 
-function addLoadImgEventListeners() {
-  document.addEventListener('keydown', handleLoadImgKeyDown);
-  document.addEventListener('click', handleLoadImgClickOutside);
-}
+const handleKeyDown = (evt) => {
+  if (evt.key === 'Escape') {
+    closeErrorMessage();
+  }
+};
 
-function removeLoadImgEventListeners() {
-  document.removeEventListener('keydown', handleLoadImgKeyDown);
-  document.removeEventListener('click', handleLoadImgClickOutside);
+const handleClickOutside = () => {
+  closeErrorMessage();
+};
+
+function closeErrorMessage() {
+  addHiddenClass(errorSection);
+
+  errorButton.removeEventListener('click', handleClickOutside);
+  document.removeEventListener('keydown', handleKeyDown);
 }
 
 export function showErrorLoadImgMessage() {
-  removeHiddenClass(errorLoadImgSection);
-  addLoadImgEventListeners();
-}
+  removeHiddenClass(errorSection);
 
-function hideErrorLoadImgMessage() {
-  addHiddenClass(errorLoadImgSection);
-  removeLoadImgEventListeners();
-}
-
-function handleLoadImgKeyDown(event) {
-  if (event.key === 'Escape') {
-    hideErrorLoadImgMessage();
-  }
-}
-
-function handleLoadImgClickOutside(event) {
-  if (!errorLoadImgSection.contains(event.target)) {
-    hideErrorLoadImgMessage();
-  }
+  errorButton.addEventListener('click', handleClickOutside);
+  document.addEventListener('keydown', handleKeyDown);
 }

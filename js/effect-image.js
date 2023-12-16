@@ -1,8 +1,8 @@
-import { FilterSettings, SliderSettings } from './constants.js';
+import { FilterSetting, SliderSetting } from './constants.js';
 import {
   addHiddenClass,
   removeHiddenClass,
-} from './util.js';
+} from './utils.js';
 
 const bodyElement = document.querySelector('body');
 const imageElement = bodyElement.querySelector('.img-upload__preview');
@@ -16,7 +16,7 @@ let isSliderCreated = false;
 
 const updateFilterValue = () => {
   const { value } = effectLevelElement;
-  const filterSettings = FilterSettings[currentEffect];
+  const filterSettings = FilterSetting[currentEffect];
 
   return (currentEffect === 'none') ? null : `${filterSettings.style}(${value}${filterSettings.unit})`;
 };
@@ -57,7 +57,7 @@ const setSlider = () => {
   if (currentEffect === 'none') {
     addHiddenClass(sliderContainerElement);
   } else {
-    updateSlider(SliderSettings[currentEffect]);
+    updateSlider(SliderSetting[currentEffect]);
     removeHiddenClass(sliderContainerElement);
   }
 };
@@ -75,7 +75,7 @@ const onEffectChange = (evt) => {
 
 export const initEffect = () => {
   if (!isSliderCreated) {
-    createSlider(SliderSettings[currentEffect]);
+    createSlider(SliderSetting[currentEffect]);
     isSliderCreated = true;
   }
 
