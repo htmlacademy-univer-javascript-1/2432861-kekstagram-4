@@ -10,26 +10,26 @@ document.body.appendChild(successMessage);
 const successSection = document.querySelector('.success');
 const successButton = document.querySelector('.success__button');
 
-const handleKeyDown = (evt) => {
+const onDocumentEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     closeSuccessMessage();
   }
 };
 
-const handleClickOutside = () => {
+const hideSuccessMessage = () => {
   closeSuccessMessage();
 };
 
 function closeSuccessMessage() {
   addHiddenClass(successSection);
 
-  successButton.removeEventListener('click', handleClickOutside);
-  document.removeEventListener('keydown', handleKeyDown);
+  successButton.removeEventListener('click', hideSuccessMessage);
+  document.removeEventListener('keydown', onDocumentEscKeydown);
 }
 
 export function showSuccessMessage() {
   removeHiddenClass(successSection);
 
-  successButton.addEventListener('click', handleClickOutside);
-  document.addEventListener('keydown', handleKeyDown);
+  successButton.addEventListener('click', hideSuccessMessage);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 }
