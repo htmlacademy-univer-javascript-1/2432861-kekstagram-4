@@ -10,26 +10,26 @@ document.body.appendChild(errorMessage);
 const errorSection = document.querySelector('.error');
 const errorButton = document.querySelector('.error__button');
 
-const handleKeyDown = (evt) => {
+const onDocumentEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     closeErrorMessage();
   }
 };
 
-const handleClickOutside = () => {
+const hideErrorMessage = () => {
   closeErrorMessage();
 };
 
 function closeErrorMessage() {
   addHiddenClass(errorSection);
 
-  errorButton.removeEventListener('click', handleClickOutside);
-  document.removeEventListener('keydown', handleKeyDown);
+  errorButton.removeEventListener('click', hideErrorMessage);
+  document.removeEventListener('keydown', onDocumentEscKeydown);
 }
 
 export function showErrorLoadImgMessage() {
   removeHiddenClass(errorSection);
 
-  errorButton.addEventListener('click', handleClickOutside);
-  document.addEventListener('keydown', handleKeyDown);
+  errorButton.addEventListener('click', hideErrorMessage);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 }

@@ -16,9 +16,9 @@ let isSliderCreated = false;
 
 const updateFilterValue = () => {
   const { value } = effectLevelElement;
-  const filterSettings = FilterSetting[currentEffect];
+  const filterSettings = FilterSetting[currentEffect.toUpperCase()];
 
-  return (currentEffect === 'none') ? null : `${filterSettings.style}(${value}${filterSettings.unit})`;
+  return (currentEffect === FilterSetting.DEFAULT_SETTING) ? null : `${filterSettings.style}(${value}${filterSettings.unit})`;
 };
 
 const setStyle = () => {
@@ -54,10 +54,10 @@ const updateSlider = ({ min, max, step }) => {
 };
 
 const setSlider = () => {
-  if (currentEffect === 'none') {
+  if (currentEffect === FilterSetting.DEFAULT_SETTING) {
     addHiddenClass(sliderContainerElement);
   } else {
-    updateSlider(SliderSetting[currentEffect]);
+    updateSlider(SliderSetting[currentEffect.toUpperCase()]);
     removeHiddenClass(sliderContainerElement);
   }
 };
@@ -75,7 +75,7 @@ const onEffectChange = (evt) => {
 
 export const initEffect = () => {
   if (!isSliderCreated) {
-    createSlider(SliderSetting[currentEffect]);
+    createSlider(SliderSetting[currentEffect.toUpperCase()]);
     isSliderCreated = true;
   }
 
@@ -83,7 +83,7 @@ export const initEffect = () => {
 };
 
 export const destroyEffect = () => {
-  updateEffect('none');
+  updateEffect(FilterSetting.DEFAULT_SETTING);
 
   effectElement.removeEventListener('change', onEffectChange);
 };

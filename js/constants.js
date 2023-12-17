@@ -29,19 +29,19 @@ export const MIN_SCALE = 25;
 export const PARSE_INT_RADIX = 10;
 
 export const FilterSetting = {
-  none: {},
-  chrome: { style: 'grayscale', unit: '' },
-  sepia: { style: 'sepia', unit: '' },
-  marvin: { style: 'invert', unit: '%' },
-  phobos: { style: 'blur', unit: 'px' },
-  heat: { style: 'brightness', unit: '' },
+  DEFAULT_SETTING: 'none',
+  CHROME: { style: 'grayscale', unit: '' },
+  SEPIA: { style: 'sepia', unit: '' },
+  MARVIN: { style: 'invert', unit: '%' },
+  PHOBOS: { style: 'blur', unit: 'px' },
+  HEAT: { style: 'brightness', unit: '' },
 };
 
 export const SliderSetting = {
-  none: { min: 0, max: 100, step: 1 },
-  chrome: { min: 0, max: 1, step: 0.1 },
-  sepia: { min: 0, max: 1, step: 0.1 },
-  marvin: { min: 0, max: 100, step: 1 },
-  phobos: { min: 0, max: 3, step: 0.1 },
-  heat: { min: 1, max: 3, step: 0.1 },
+  NONE: { min: 0, max: 100, step: 1 },
+  CHROME: { min: 0, max: 1, step: 0.1 },
+  SEPIA: { min: 0, max: 1, step: 0.1 },
+  MARVIN: { min: 0, max: 100, step: 1 },
+  PHOBOS: { min: 0, max: 3, step: 0.1 },
+  HEAT: { min: 1, max: 3, step: 0.1 },
 };
