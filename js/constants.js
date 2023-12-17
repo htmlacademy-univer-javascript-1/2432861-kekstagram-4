@@ -45,3 +45,11 @@ export const SliderSetting = {
   PHOBOS: { min: 0, max: 3, step: 0.1 },
   HEAT: { min: 1, max: 3, step: 0.1 },
 };
+
+export const Filter = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
+};
+
+export const RANDOM_IMG_COUNT = 10;

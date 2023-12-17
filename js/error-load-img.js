@@ -10,26 +10,26 @@ document.body.appendChild(errorMessage);
 const errorSection = document.querySelector('.error');
 const errorButton = document.querySelector('.error__button');
 
-const onDocumentEscKeydown = (evt) => {
+const escapeKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     closeErrorMessage();
   }
 };
 
-const hideErrorMessage = () => {
+const errorButtonClickHandler = () => {
   closeErrorMessage();
 };
 
 function closeErrorMessage() {
   addHiddenClass(errorSection);
 
-  errorButton.removeEventListener('click', hideErrorMessage);
-  document.removeEventListener('keydown', onDocumentEscKeydown);
+  errorButton.removeEventListener('click', errorButtonClickHandler);
+  document.removeEventListener('keydown', escapeKeydownHandler);
 }
 
 export function showErrorMessage() {
   removeHiddenClass(errorSection);
 
-  errorButton.addEventListener('click', hideErrorMessage);
-  document.addEventListener('keydown', onDocumentEscKeydown);
+  errorButton.addEventListener('click', errorButtonClickHandler);
+  document.addEventListener('keydown', escapeKeydownHandler);
 }
