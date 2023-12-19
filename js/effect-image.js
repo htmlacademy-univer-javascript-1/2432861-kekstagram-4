@@ -1,8 +1,8 @@
-import { FilterSettings, SliderSettings } from './constants.js';
+import { FilterSetting, SliderSetting } from './constants.js';
 import {
   addHiddenClass,
   removeHiddenClass,
-} from './full-size-picture.js';
+} from './utils.js';
 
 const bodyElement = document.querySelector('body');
 const imageElement = bodyElement.querySelector('.img-upload__preview');
@@ -16,9 +16,9 @@ let isSliderCreated = false;
 
 const updateFilterValue = () => {
   const { value } = effectLevelElement;
-  const filterSettings = FilterSettings[currentEffect];
+  const filterSettings = FilterSetting[currentEffect.toUpperCase()];
 
-  return (currentEffect === 'none') ? null : `${filterSettings.style}(${value}${filterSettings.unit})`;
+  return (currentEffect === FilterSetting.DEFAULT_SETTING) ? null : `${filterSettings.style}(${value}${filterSettings.unit})`;
 };
 
 const setStyle = () => {
@@ -54,10 +54,10 @@ const updateSlider = ({ min, max, step }) => {
 };
 
 const setSlider = () => {
-  if (currentEffect === 'none') {
+  if (currentEffect === FilterSetting.DEFAULT_SETTING) {
     addHiddenClass(sliderContainerElement);
   } else {
-    updateSlider(SliderSettings[currentEffect]);
+    updateSlider(SliderSetting[currentEffect.toUpperCase()]);
     removeHiddenClass(sliderContainerElement);
   }
 };
@@ -75,7 +75,7 @@ const onEffectChange = (evt) => {
 
 export const initEffect = () => {
   if (!isSliderCreated) {
-    createSlider(SliderSettings[currentEffect]);
+    createSlider(SliderSetting[currentEffect.toUpperCase()]);
     isSliderCreated = true;
   }
 
@@ -83,7 +83,7 @@ export const initEffect = () => {
 };
 
 export const destroyEffect = () => {
-  updateEffect('none');
+  updateEffect(FilterSetting.DEFAULT_SETTING);
 
   effectElement.removeEventListener('change', onEffectChange);
 };

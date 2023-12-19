@@ -3,10 +3,13 @@ import {
   removeHiddenClass,
   removeModalOpenClass,
   addModalOpenClass
-} from './full-size-picture.js';
+} from './utils.js';
 import { MAX_COUNT_HASHTAG, MAX_COMMENT_LENGTH } from './constants.js';
 import { destroyEffect, initEffect } from './effect-image.js';
 import { destroyScale, initScale } from './scale-image.js';
+import { createSender, ErrorText } from './api.js';
+import { showSuccessMessage } from './success.js';
+import { showErrorMessage } from './error-load-img.js';
 
 
 const bodyElement = document.querySelector('body');
@@ -62,11 +65,22 @@ const initValidation = () => {
   formValidation.addValidator(descriptionInput, isEveryCommentValid, 'Комментарий не валиден');
 };
 
+const onSuccess = () => {
+  closeEditPopup();
+  showSuccessMessage();
+};
+
 const onSubmitButtonClick = async (evt) => {
   evt.preventDefault();
 
   if (formValidation.validate()) {
-    formElement.submit();
+    const formData = new FormData(formElement);
+
+    try {
+      await createSender(formData, onSuccess, ErrorText.SEND_DATA);
+    } catch (error) {
+      showErrorMessage();
+    }
   }
 };
 
