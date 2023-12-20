@@ -32,9 +32,7 @@ const renderPicture = (picture) => {
 };
 
 export const renderPhotos = (data) => {
-  document
-    .querySelectorAll('.picture')
-    .forEach((element) => element.remove());
+  document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   pictures = data.slice();
 
