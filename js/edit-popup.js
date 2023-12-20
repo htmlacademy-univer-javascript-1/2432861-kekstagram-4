@@ -20,6 +20,7 @@ const cancelElement = overlayElement.querySelector('.img-upload__cancel');
 const submitButton = bodyElement.querySelector('.img-upload__submit');
 const descriptionInput = overlayElement.querySelector('.text__description');
 const hashtagsInput = overlayElement.querySelector('.text__hashtags');
+const imagePreview = overlayElement.querySelector('.img-upload__preview img');
 
 const hashtagRegex = /^#[a-zA-Zа-яА-Я0-9]{1,19}(?:\s+#[a-zA-Zа-яА-Я0-9]{1,19})*$/;
 
@@ -137,9 +138,22 @@ const openEditPopup = () => {
   addEventListeners();
 };
 
+const updateImagePreview = (file) => {
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    imagePreview.src = event.target.result;
+  };
+
+  reader.readAsDataURL(file);
+};
+
 const onFileInputChange = () => {
   const file = inputElement.files[0];
+
   if (file && file.type.startsWith('image/')) {
+    updateImagePreview(file);
+
     openEditPopup();
     initScale();
     initEffect();
