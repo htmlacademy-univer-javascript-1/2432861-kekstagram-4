@@ -73,12 +73,14 @@ const onSuccess = () => {
 
 const onSubmitButtonClick = async (evt) => {
   evt.preventDefault();
+  submitButton.setAttribute('disabled', 'true');
 
   if (formValidation.validate()) {
     const formData = new FormData(formElement);
 
     try {
       await createSender(formData, onSuccess, ErrorText.SEND_DATA);
+      submitButton.removeAttribute('disabled');
     } catch (error) {
       showErrorMessage();
     }

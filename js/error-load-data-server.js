@@ -16,6 +16,12 @@ const escapeKeydownHandler = (evt) => {
   }
 };
 
+const handleClickOutside = (evt) => {
+  if (!evt.target.closest('.error__inner')) {
+    closeErrorMessage();
+  }
+};
+
 const errorButtonClickHandler = () => {
   closeErrorMessage();
 };
@@ -25,6 +31,7 @@ function closeErrorMessage() {
 
   errorButton.removeEventListener('click', errorButtonClickHandler);
   document.removeEventListener('keydown', escapeKeydownHandler);
+  document.removeEventListener('click', handleClickOutside);
 }
 
 export function showErrorLoadImgMessage() {
@@ -32,4 +39,5 @@ export function showErrorLoadImgMessage() {
 
   errorButton.addEventListener('click', errorButtonClickHandler);
   document.addEventListener('keydown', escapeKeydownHandler);
+  document.addEventListener('click', handleClickOutside);
 }

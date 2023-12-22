@@ -11,7 +11,7 @@ const sliderContainerElement = bodyElement.querySelector('.img-upload__effect-le
 const effectElement = bodyElement.querySelector('.img-upload__effects');
 const effectLevelElement = bodyElement.querySelector('.effect-level__value');
 
-let currentEffect = 'none';
+let currentEffect = FilterSetting.DEFAULT_SETTING;
 let isSliderCreated = false;
 
 const updateFilterValue = () => {

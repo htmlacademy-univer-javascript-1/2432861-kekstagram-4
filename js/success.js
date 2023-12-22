@@ -16,6 +16,12 @@ const escapeKeydownHandler = (evt) => {
   }
 };
 
+const handleClickOutside = (evt) => {
+  if (!evt.target.closest('.success__inner') && !evt.target.closest('.error__inner')) {
+    closeSuccessMessage();
+  }
+};
+
 const successButtonClickHandler = () => {
   closeSuccessMessage();
 };
@@ -25,6 +31,7 @@ function closeSuccessMessage() {
 
   successButton.removeEventListener('click', successButtonClickHandler);
   document.removeEventListener('keydown', escapeKeydownHandler);
+  document.removeEventListener('click', handleClickOutside);
 }
 
 export function showSuccessMessage() {
@@ -32,4 +39,5 @@ export function showSuccessMessage() {
 
   successButton.addEventListener('click', successButtonClickHandler);
   document.addEventListener('keydown', escapeKeydownHandler);
+  document.addEventListener('click', handleClickOutside);
 }
