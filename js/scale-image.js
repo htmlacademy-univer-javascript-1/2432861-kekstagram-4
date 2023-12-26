@@ -9,19 +9,19 @@ import {
 const overlayElement = document.querySelector('.img-upload__overlay');
 const previewImageElement = overlayElement.querySelector('.img-upload__preview img');
 const scaleElement = overlayElement.querySelector('.img-upload__scale');
-const controlScaleInput = scaleElement.querySelector('.scale__control--value');
-const controlBiggerScaleButton = scaleElement.querySelector('.scale__control--bigger');
-const controlSmallerScaleButton = scaleElement.querySelector('.scale__control--smaller');
+const controlScaleInputElement = scaleElement.querySelector('.scale__control--value');
+const controlBiggerScaleButtonElement = scaleElement.querySelector('.scale__control--bigger');
+const controlSmallerScaleButtonElement = scaleElement.querySelector('.scale__control--smaller');
 
 const imageScale = (value) => {
   const scaleTransformValue = `scale(${value / 100})`;
 
   previewImageElement.style.transform = scaleTransformValue;
-  controlScaleInput.value = `${value}%`;
+  controlScaleInputElement.value = `${value}%`;
 };
 
 const updateScale = (step) => {
-  const currentScalePercentage = parseInt(controlScaleInput.value, PARSE_INT_RADIX);
+  const currentScalePercentage = parseInt(controlScaleInputElement.value, PARSE_INT_RADIX);
   const newScalePercentage = currentScalePercentage + step;
   const clampedScalePercentage = Math.min(Math.max(newScalePercentage, MIN_SCALE), MAX_SCALE);
 
@@ -39,13 +39,13 @@ const onSmallerScaleButtonClick = () => {
 export const destroyScale = () => {
   imageScale(DEFAULT_SCALE);
 
-  controlBiggerScaleButton.removeEventListener('click', onBiggerScaleButtonClick);
-  controlSmallerScaleButton.removeEventListener('click', onSmallerScaleButtonClick);
+  controlBiggerScaleButtonElement.removeEventListener('click', onBiggerScaleButtonClick);
+  controlSmallerScaleButtonElement.removeEventListener('click', onSmallerScaleButtonClick);
 };
 
 export const initScale = () => {
-  controlBiggerScaleButton.addEventListener('click', onBiggerScaleButtonClick);
-  controlSmallerScaleButton.addEventListener('click', onSmallerScaleButtonClick);
+  controlBiggerScaleButtonElement.addEventListener('click', onBiggerScaleButtonClick);
+  controlSmallerScaleButtonElement.addEventListener('click', onSmallerScaleButtonClick);
 };
 
 

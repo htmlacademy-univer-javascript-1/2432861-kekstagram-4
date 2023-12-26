@@ -1,4 +1,4 @@
-const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
+const BASE_URL = 'https://29.javascript.pages.academy/kekstagramm';
 
 export const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
@@ -24,6 +24,7 @@ export const createLoader = (onSuccess, onError) => fetch(
   })
   .catch((err) => {
     onError(err);
+    throw err;
   });
 
 export const createSender = (body, onSuccess, onError) => fetch(

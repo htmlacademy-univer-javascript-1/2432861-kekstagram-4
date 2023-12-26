@@ -21,13 +21,13 @@ const updateFilterValue = () => {
   return (currentEffect === FilterSetting.DEFAULT_SETTING) ? null : `${filterSettings.style}(${value}${filterSettings.unit})`;
 };
 
-const setStyle = () => {
+const setStyleFilter = () => {
   imageElement.style.filter = updateFilterValue();
 };
 
 const onSliderUpdate = () => {
   effectLevelElement.value = sliderElement.noUiSlider.get();
-  setStyle();
+  setStyleFilter();
 };
 
 const createSlider = ({ min, max, step }) => {
@@ -66,7 +66,7 @@ const updateEffect = (effect) => {
   currentEffect = effect;
 
   setSlider();
-  setStyle();
+  setStyleFilter();
 };
 
 const onEffectChange = (evt) => {

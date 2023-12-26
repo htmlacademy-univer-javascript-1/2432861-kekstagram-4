@@ -3,41 +3,39 @@ import {
   removeHiddenClass,
 } from './utils.js';
 
-const errorTemplate = document.getElementById('error');
-const errorMessage = errorTemplate.content.cloneNode(true).querySelector('.error');
-document.body.appendChild(errorMessage);
+const errorTemplateElement = document.getElementById('error');
+const errorMessageElement = errorTemplateElement.content.cloneNode(true).querySelector('.error');
+document.body.appendChild(errorMessageElement);
 
-const errorSection = document.querySelector('.error');
-const errorButton = document.querySelector('.error__button');
+const errorSectionElement = document.querySelector('.error');
+const errorButtonElement = document.querySelector('.error__button');
 
-const escapeKeydownHandler = (evt) => {
+const onEscapeButtonKeydown = (evt) => {
   if (evt.key === 'Escape') {
     closeErrorMessage();
   }
 };
 
-const handleClickOutside = (evt) => {
+const onOutsideClick = (evt) => {
   if (!evt.target.closest('.error__inner')) {
     closeErrorMessage();
   }
 };
 
-const errorButtonClickHandler = () => {
-  closeErrorMessage();
-};
+const onCloseButtonClick = () => closeErrorMessage();
 
 function closeErrorMessage() {
-  addHiddenClass(errorSection);
+  addHiddenClass(errorSectionElement);
 
-  errorButton.removeEventListener('click', errorButtonClickHandler);
-  document.removeEventListener('keydown', escapeKeydownHandler);
-  document.removeEventListener('click', handleClickOutside);
+  errorButtonElement.removeEventListener('click', onCloseButtonClick);
+  document.removeEventListener('keydown', onEscapeButtonKeydown);
+  document.removeEventListener('click', onOutsideClick);
 }
 
 export function showErrorMessage() {
-  removeHiddenClass(errorSection);
+  removeHiddenClass(errorSectionElement);
 
-  errorButton.addEventListener('click', errorButtonClickHandler);
-  document.addEventListener('keydown', escapeKeydownHandler);
-  document.addEventListener('click', handleClickOutside);
+  errorButtonElement.addEventListener('click', onCloseButtonClick);
+  document.addEventListener('keydown', onEscapeButtonKeydown);
+  document.addEventListener('click', onOutsideClick);
 }

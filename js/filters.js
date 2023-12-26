@@ -1,8 +1,9 @@
 import { Filter, RANDOM_IMG_COUNT } from './constants.js';
+import { debounce } from './utils.js';
 
 const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
 const HIDDEN_CONTAINER_CLASS = 'img-filters--inactive';
-const filtersContainer = document.querySelector('.img-filters');
+const filtersContainerElement = document.querySelector('.img-filters');
 
 let activeFilter = Filter.DEFAULT;
 let miniatures = [];
@@ -29,7 +30,7 @@ const onFilterButtonClick = (callback) => (evt) => {
   const id = evt.target.id;
 
   if (id && id !== activeFilter) {
-    filtersContainer.querySelector(`#${activeFilter}`).classList.remove(ACTIVE_FILTER_CLASS);
+    filtersContainerElement.querySelector(`#${activeFilter}`).classList.remove(ACTIVE_FILTER_CLASS);
     evt.target.classList.add(ACTIVE_FILTER_CLASS);
     activeFilter = id;
 
@@ -40,6 +41,6 @@ const onFilterButtonClick = (callback) => (evt) => {
 export const initFilters = (data, callback) => {
   miniatures = data.slice();
 
-  filtersContainer.classList.remove(HIDDEN_CONTAINER_CLASS);
-  filtersContainer.addEventListener('click', onFilterButtonClick(callback));
+  filtersContainerElement.classList.remove(HIDDEN_CONTAINER_CLASS);
+  filtersContainerElement.addEventListener('click', debounce(onFilterButtonClick(callback)));
 };

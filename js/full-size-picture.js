@@ -54,28 +54,32 @@ const renderComments = () => {
   (shouldHideLoader ? addHiddenClass : removeHiddenClass)(commentsLoaderElement);
 };
 
-const closeFullSizeImage = () => {
-  countVisibleСomments = STEP_COMMENTS;
-
-  addHiddenClass(fullPictureElement);
-  addHiddenClass(commentCountElement);
-  removeModalOpenClass(bodyElement);
-};
-
-const buttonLoadMoreCommentsClickHandler = () => {
+const onCommentsMoreButtonClick = () => {
   countVisibleСomments += STEP_COMMENTS;
 
   renderComments();
 };
 
-const escapeKeydownHandler = (evt) => {
+const onCloseButtonClick = () => closeFullSizeImage();
+
+const onEscapeButtonKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeFullSizeImage();
   }
 };
 
-const exitButtonClickHandler = () => closeFullSizeImage();
+function closeFullSizeImage() {
+  countVisibleСomments = STEP_COMMENTS;
+
+  addHiddenClass(fullPictureElement);
+  addHiddenClass(commentCountElement);
+  removeModalOpenClass(bodyElement);
+
+  exitButtonElement.removeEventListener('click', onCloseButtonClick);
+  document.removeEventListener('keydown', onEscapeButtonKeydown);
+  commentsLoaderElement.removeEventListener('click', onCommentsMoreButtonClick);
+}
 
 export const renderFullSizeWindow = (picture) => {
   pictureComments = picture.comments;
@@ -87,7 +91,7 @@ export const renderFullSizeWindow = (picture) => {
   removeHiddenClass(commentCountElement);
   addModalOpenClass(bodyElement);
 
-  exitButtonElement.addEventListener('click', exitButtonClickHandler);
-  document.addEventListener('keydown', escapeKeydownHandler);
-  commentsLoaderElement.addEventListener('click', buttonLoadMoreCommentsClickHandler);
+  exitButtonElement.addEventListener('click', onCloseButtonClick);
+  document.addEventListener('keydown', onEscapeButtonKeydown);
+  commentsLoaderElement.addEventListener('click', onCommentsMoreButtonClick);
 };

@@ -11,16 +11,15 @@ import { createSender, ErrorText } from './api.js';
 import { showSuccessMessage } from './success.js';
 import { showErrorMessage } from './error-load-img.js';
 
-
 const bodyElement = document.querySelector('body');
 const inputElement = bodyElement.querySelector('.img-upload__input');
 const formElement = bodyElement.querySelector('.img-upload__form');
 const overlayElement = formElement.querySelector('.img-upload__overlay');
 const cancelElement = overlayElement.querySelector('.img-upload__cancel');
-const submitButton = bodyElement.querySelector('.img-upload__submit');
-const descriptionInput = overlayElement.querySelector('.text__description');
-const hashtagsInput = overlayElement.querySelector('.text__hashtags');
-const imagePreview = overlayElement.querySelector('.img-upload__preview img');
+const submitButtonElement = bodyElement.querySelector('.img-upload__submit');
+const descriptionInputElement = overlayElement.querySelector('.text__description');
+const hashtagsInputElement = overlayElement.querySelector('.text__hashtags');
+const imagePreviewElement = overlayElement.querySelector('.img-upload__preview img');
 
 const hashtagRegex = /^#[a-zA-Zа-яА-Я0-9]{1,19}(?:\s+#[a-zA-Zа-яА-Я0-9]{1,19})*$/;
 
@@ -39,6 +38,21 @@ const splitHashtagInput = (input) => {
   return hashtagsArray;
 };
 
+const isHashtagValid = (hashtag, uniqueHashtagsSet) => {
+  const lowercaseTag = hashtag.toLowerCase();
+
+  if (hashtagRegex.test(lowercaseTag)) {
+    if (uniqueHashtagsSet.has(lowercaseTag)) {
+      return false;
+    } else {
+      uniqueHashtagsSet.add(lowercaseTag);
+      return true;
+    }
+  } else {
+    return false;
+  }
+};
+
 const isEveryHashtagValid = (input) => {
   if (!input) {
     return true;
@@ -46,7 +60,9 @@ const isEveryHashtagValid = (input) => {
 
   const hashtags = splitHashtagInput(input);
   const enoughHashtagsCount = hashtags.length <= MAX_COUNT_HASHTAG;
-  const isAllValid = hashtags.every((hashtag) => hashtagRegex.test(hashtag));
+
+  const uniqueHashtagsSet = new Set();
+  const isAllValid = hashtags.every((hashtag) => isHashtagValid(hashtag, uniqueHashtagsSet));
 
   return isAllValid && enoughHashtagsCount;
 };
@@ -62,8 +78,8 @@ const isEveryCommentValid = (input) => {
 const initValidation = () => {
   formValidation = new Pristine(formElement, pristineConfig);
 
-  formValidation.addValidator(hashtagsInput, isEveryHashtagValid, 'Xештег не валиден');
-  formValidation.addValidator(descriptionInput, isEveryCommentValid, 'Комментарий не валиден');
+  formValidation.addValidator(hashtagsInputElement, isEveryHashtagValid, 'Xештег не валиден');
+  formValidation.addValidator(descriptionInputElement, isEveryCommentValid, 'Комментарий не валиден');
 };
 
 const onSuccess = () => {
@@ -73,16 +89,17 @@ const onSuccess = () => {
 
 const onSubmitButtonClick = async (evt) => {
   evt.preventDefault();
-  submitButton.setAttribute('disabled', 'true');
+  submitButtonElement.setAttribute('disabled', 'true');
 
   if (formValidation.validate()) {
     const formData = new FormData(formElement);
 
     try {
       await createSender(formData, onSuccess, ErrorText.SEND_DATA);
-      submitButton.removeAttribute('disabled');
+      submitButtonElement.removeAttribute('disabled');
     } catch (error) {
       showErrorMessage();
+      submitButtonElement.removeAttribute('disabled');
     }
   }
 };
@@ -106,18 +123,18 @@ const onDocumentEscKeydown = (evt) => {
 
 const addEventListeners = () => {
   document.addEventListener('keydown', onDocumentEscKeydown);
-  submitButton.addEventListener('click', onSubmitButtonClick);
+  submitButtonElement.addEventListener('click', onSubmitButtonClick);
   cancelElement.addEventListener('click', onCloseButtonClick);
-  descriptionInput.addEventListener('keydown', onInputEscKeydown);
-  hashtagsInput.addEventListener('keydown', onInputEscKeydown);
+  descriptionInputElement.addEventListener('keydown', onInputEscKeydown);
+  hashtagsInputElement.addEventListener('keydown', onInputEscKeydown);
 };
 
 const removeEventListeners = () => {
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  submitButton.removeEventListener('click', onSubmitButtonClick);
+  submitButtonElement.removeEventListener('click', onSubmitButtonClick);
   cancelElement.removeEventListener('click', onCloseButtonClick);
-  descriptionInput.removeEventListener('keydown', onInputEscKeydown);
-  hashtagsInput.removeEventListener('keydown', onInputEscKeydown);
+  descriptionInputElement.removeEventListener('keydown', onInputEscKeydown);
+  hashtagsInputElement.removeEventListener('keydown', onInputEscKeydown);
 };
 
 function closeEditPopup() {
@@ -144,7 +161,7 @@ const updateImagePreview = (file) => {
   const reader = new FileReader();
 
   reader.onload = (event) => {
-    imagePreview.src = event.target.result;
+    imagePreviewElement.src = event.target.result;
   };
 
   reader.readAsDataURL(file);
