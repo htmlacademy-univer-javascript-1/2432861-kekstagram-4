@@ -38,6 +38,7 @@ export const renderPhotos = (data) => {
 
   if (pictures) {
     pictures.forEach(renderPicture);
+
     picturesContainer.addEventListener('click', onPictureContainerClick);
   }
 };
